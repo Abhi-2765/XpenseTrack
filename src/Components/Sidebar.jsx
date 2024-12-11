@@ -1,6 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { Context } from '../App';
 
-const Sidebar = ({ isOpen, toggleSidebar }) => {
+
+const Sidebar = ({ toggleSidebar }) => {
+
+  const { isOpen, setIsOpen, page, setPage} = useContext(Context);
+
   return (
     <>
       {/* Sidebar */}

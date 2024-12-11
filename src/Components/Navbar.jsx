@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import logo from '../assets/xpensetrack-logo.png';
+import { logout } from '../Configure/firebase';
 
 const Navbar = ({toggleSidebar}) => {
 
@@ -35,7 +36,7 @@ const Navbar = ({toggleSidebar}) => {
         </div>
 
         {/* Profile icon */}
-        <div>
+        <div onClick={logout}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"

@@ -2,30 +2,39 @@ import React, { useState } from "react";
 import google from "../assets/google.svg";
 import github from "../assets/github.svg";
 import { useForm } from "react-hook-form";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 import { toast, ToastContainer } from "react-toastify";
+import { auth, signInWithGoogle } from "../Configure/firebase";
 
 const Login = ({ isLoggedIn }) => {
-  const { register, handleSubmit, formState: { errors }, watch, reset } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    watch,
+    reset,
+  } = useForm();
   const [signUp, setSignUp] = useState("SignUp");
 
   const password = watch("password");
 
   const onSubmit = (data) => {
-    toast.success(`${signUp} Successful!`, { position: toast.POSITION.TOP_RIGHT });
+    toast.success(`${signUp} Successful!`, {
+      position: toast.POSITION.TOP_RIGHT,
+    });
     reset();
   };
 
   if (isLoggedIn) return null;
 
   return (
-    <div className="flex justify-center items-center h-screen bg-blue-950 text-white py-8">
+    <div className="flex justify-center items-center h-screen bg-blue-950 text-white px-4">
       <div className="App">
-        <ToastContainer/>
+        <ToastContainer />
       </div>
-      <div className="max-w-md mx-auto p-6 bg-white text-blue-950 rounded-lg shadow-lg">
+      <div className="w-full max-w-md bg-white text-blue-950 rounded-lg shadow-lg p-8">
         <form onSubmit={handleSubmit(onSubmit)}>
-          <h1 className="text-2xl font-bold mb-4">{signUp}</h1>
+          <h1 className="text-3xl font-bold mb-6 text-center">{signUp}</h1>
 
           {/* Email Input */}
           <div className="w-full mb-4">
@@ -57,7 +66,8 @@ const Login = ({ isLoggedIn }) => {
                   message: "Password must be at least 8 characters",
                 },
                 pattern: {
-                  value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,}$/,
+                  value:
+                    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,}$/,
                   message:
                     "Password must contain uppercase, lowercase, numbers, and special characters",
                 },
@@ -85,10 +95,10 @@ const Login = ({ isLoggedIn }) => {
           )}
 
           {/* Submit Button */}
-          <div className="flex justify-center mb-4">
+          <div className="flex justify-center mb-6">
             <button
               type="submit"
-              className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition duration-200"
+              className="bg-blue-500 text-white w-full py-3 rounded-lg hover:bg-blue-600 transition duration-200 text-lg"
             >
               {signUp}
             </button>
@@ -96,17 +106,15 @@ const Login = ({ isLoggedIn }) => {
         </form>
 
         {/* Divider */}
-        <hr className="my-4" />
+        <hr className="my-6" />
 
         {/* Social Login Buttons */}
-        <div className="flex flex-row justify-around mb-4">
-          <button className="flex items-center gap-2 bg-gray-100 p-2 rounded-lg shadow hover:bg-gray-200 transition mx-1">
+        <div className="flex flex-row justify-around gap-2 mb-6">
+          <button className="flex justify-center items-center gap-2 bg-gray-100 p-3 w-full rounded-lg shadow hover:bg-gray-200 transition"
+            onClick={signInWithGoogle}
+          >
             <img src={google} alt="Google" className="h-6 w-6" />
             <span>Sign in with Google</span>
-          </button>
-          <button className="flex items-center gap-2 bg-gray-100 p-2 rounded-lg shadow hover:bg-gray-200 transition mx-1">
-            <img src={github} alt="GitHub" className="h-6 w-6" />
-            <span>Sign in with GitHub</span>
           </button>
         </div>
 
