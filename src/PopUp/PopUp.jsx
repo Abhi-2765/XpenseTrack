@@ -130,8 +130,8 @@ const PopUp = () => {
             placeholder="Enter Note"
             {...register("note", {
               maxLength: {
-                value: 10,
-                message: "No more than 10 characters is allowed",
+                value: 15,
+                message: "No more than 15 characters is allowed",
               },
             })}
             className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -156,13 +156,10 @@ const PopUp = () => {
       <div className="p-4 bg-gray-100 mt-6 rounded-md">
         <h3 className="text-lg font-bold mb-3 text-blue-600">Summary</h3>
         <p className="text-green-600 font-medium">
-          Net Income: <span className="font-bold">₹{income.toFixed(2)}</span>
+          Income: <span className="font-bold">₹{income.toFixed(2)}</span>
         </p>
         <p className="text-red-600 font-medium">
-          Net Expenses: <span className="font-bold">₹{expense.toFixed(2)}</span>
-        </p>
-        <p className=" font-bold">
-          Balance: <span className="font-bold">₹{income.toFixed(2) - expense.toFixed(2)}</span>
+          Expenses: <span className="font-bold">₹{expense.toFixed(2)}</span>
         </p>
       </div>
 
