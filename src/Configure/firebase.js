@@ -8,7 +8,6 @@ import { initializeApp } from "firebase/app";
 import { toast } from "react-toastify";
 import { doc, getFirestore, setDoc } from "firebase/firestore";
 
-// Firebase configuration
 const firebaseConfig = {
 	apiKey: "AIzaSyDnmBH_iLyLwiFzh5Mg4dHhceWdk3cyPpI",
 	authDomain: "xpensetrack-abhi.firebaseapp.com",
@@ -31,20 +30,20 @@ const signInWithGoogle = async () => {
 			throw new Error("User data not available.");
 		}
 		console.log(user);
-		await setDoc(
-			doc(db, "users", user.uid),
-			{
-				id: user.uid,
-				name: user.displayName,
-				email: user.email,
-			},
-			{ merge: true }
-		);
+		await setDoc(doc(db, "users", user.uid), {
+			id: user.uid,
+			name: user.displayName,
+			email: user.email,
+		});
+
+		await setDoc(doc(db, "accounts", user.uid), {
+			dateExpenses: [],
+		});
 
 		toast.success("Sign-in successful!");
 	} catch (error) {
 		console.error("Sign-in error:", error.message);
-		toast.error(`Error: ${error.message}`);
+		toast.error(error.code.split("/")[1].split("-").join(" "));
 	}
 };
 
