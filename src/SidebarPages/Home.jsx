@@ -6,6 +6,11 @@ const Home = () => {
 
   return (
     <div className="p-6 max-w-screen-md mx-auto bg-gray-100 min-h-screen">
+
+      {/* Balance Summary */}
+      
+
+
       {/* Date Picker */}
       <div className="mb-6">
         <label htmlFor="date-picker" className="block text-lg font-bold mb-2">

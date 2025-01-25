@@ -3,8 +3,6 @@ import logo from '../assets/xpensetrack-logo.png';
 import { logout } from '../Configure/firebase';
 
 const Navbar = ({toggleSidebar}) => {
-
-
   return (
     <div className='z-50'>
       <div className="flex flex-row justify-between items-center max-h-12 bg-blue-950 px-4 py-2 border-b-2">

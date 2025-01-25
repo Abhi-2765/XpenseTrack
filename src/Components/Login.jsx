@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import google from "../assets/google.svg";
-import github from "../assets/github.svg";
 import { useForm } from "react-hook-form";
-import "react-toastify/dist/ReactToastify.css";
-import { toast, ToastContainer } from "react-toastify";
 import { auth, signInWithGoogle } from "../Configure/firebase";
 
 const Login = ({ isLoggedIn }) => {
@@ -19,9 +16,7 @@ const Login = ({ isLoggedIn }) => {
   const password = watch("password");
 
   const onSubmit = (data) => {
-    toast.success(`${signUp} Successful!`, {
-      position: toast.POSITION.TOP_RIGHT,
-    });
+    alert(`${signUp} Successful!`);
     reset();
   };
 
@@ -29,9 +24,6 @@ const Login = ({ isLoggedIn }) => {
 
   return (
     <div className="flex justify-center items-center h-screen bg-blue-950 text-white px-4">
-      <div className="App">
-        <ToastContainer />
-      </div>
       <div className="w-full max-w-md bg-white text-blue-950 rounded-lg shadow-lg p-8">
         <form onSubmit={handleSubmit(onSubmit)}>
           <h1 className="text-3xl font-bold mb-6 text-center">{signUp}</h1>
@@ -50,7 +42,9 @@ const Login = ({ isLoggedIn }) => {
                 },
               })}
             />
-            {errors.email && toast.error(errors.email.message)}
+            {errors.email && (
+              <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
+            )}
           </div>
 
           {/* Password Input */}
@@ -73,7 +67,11 @@ const Login = ({ isLoggedIn }) => {
                 },
               })}
             />
-            {errors.password && toast.error(errors.password.message)}
+            {errors.password && (
+              <p className="text-red-500 text-sm mt-1">
+                {errors.password.message}
+              </p>
+            )}
           </div>
 
           {/* Confirm Password Input */}
@@ -89,8 +87,11 @@ const Login = ({ isLoggedIn }) => {
                     value === password || "Passwords do not match",
                 })}
               />
-              {errors.confirmPassword &&
-                toast.error(errors.confirmPassword.message)}
+              {errors.confirmPassword && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.confirmPassword.message}
+                </p>
+              )}
             </div>
           )}
 
@@ -110,7 +111,8 @@ const Login = ({ isLoggedIn }) => {
 
         {/* Social Login Buttons */}
         <div className="flex flex-row justify-around gap-2 mb-6">
-          <button className="flex justify-center items-center gap-2 bg-gray-100 p-3 w-full rounded-lg shadow hover:bg-gray-200 transition"
+          <button
+            className="flex justify-center items-center gap-2 bg-gray-100 p-3 w-full rounded-lg shadow hover:bg-gray-200 transition"
             onClick={signInWithGoogle}
           >
             <img src={google} alt="Google" className="h-6 w-6" />
