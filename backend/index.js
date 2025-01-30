@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
 import { PORT, DB_URL } from "./config.js";
-import { AccountSchema } from "./models/accountSchema.js";
+import { User } from "./models/accountSchema.js";
 import router from "./routes/accountsRoute.js";
 
 const app = express();
