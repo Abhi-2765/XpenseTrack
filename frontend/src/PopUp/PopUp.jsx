@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 const PopUp = () => {
@@ -9,9 +9,21 @@ const PopUp = () => {
   const [income, setIncome] = useState(0);
   const [expense, setExpense] = useState(0);
 
+  const IncomeCategory = ["Salary", "Allowance", "Receivables"];
+  const ExpenseCategory = [
+    "Food",
+    "Groceries",
+    "Stationary",
+    "Entertainment",
+    "Social Life",
+    "Lending",
+  ];
+
   const onSubmit = (data) => {
     const amount = parseFloat(data.amount);
     setSubmittedData((prevData) => [...prevData, { ...data, type }]);
+
+    console.log(submittedData); 
 
     if (type === "Expense") {
       setExpense(expense + amount);
@@ -86,21 +98,9 @@ const PopUp = () => {
             <option value="" disabled>
               Select category
             </option>
-            {type === "Income" ? (
-              <>
-                <option value="Salary">Salary</option>
-                <option value="Allowance">Allowance</option>
-                <option value="Receivables">Receivables</option>
-              </>
-            ) : (
-              <>
-                <option value="Groceries">Groceries</option>
-                <option value="Food">Food</option>
-                <option value="Stationary">Stationary</option>
-                <option value="Movie">Movie</option>
-                <option value="Lending">Lending</option>
-              </>
-            )}
+            {(type === "Income" ? IncomeCategory : ExpenseCategory).map((category) => (
+              <option key={category} value={category}>{category}</option>
+            ))}
           </select>
           {errors.category && (
             <p className="text-red-500 text-sm">{errors.category.message}</p>
