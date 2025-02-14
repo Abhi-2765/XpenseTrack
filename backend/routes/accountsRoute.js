@@ -1,15 +1,80 @@
 import mongoose from "mongoose";
 import express from "express";
-// import { User } from "../models/accountSchema.js";
+import { User } from "../models/accountSchema.js";
 
 const router = express.Router();
 
-router.post("/:uid", async (req, res) => {
+router.post("/create", async (req, res) => {
 	try {
-		const { user } = req.params.uid;
+		const { uid } = req.body;
+
+		if (!uid) {
+			return res.status(400).json({
+				message: "Missing required field: uid",
+			});
+		}
+
+		const existingUser = await User.findOne({ userId: uid });
+		if (existingUser) {
+			return res.status(409).json({
+				message: "User already exists with this uid",
+			});
+		}
+
+		const newUser = new User({
+			userId: uid,
+			logs: [],
+		});
+
+		await newUser.save();
+
+		return res.status(201).json({
+			message: "User created successfully",
+			user: newUser,
+		});
 	} catch (error) {
-		console.log(error.message);
-		return res.status(500).send({ message: error.message });
+		console.error(error.message);
+		return res.status(500).json({
+			message: "Internal Server Error",
+		});
+	}
+});
+
+router.post("/:date", async (req, res) => {
+	try {
+		const { date } = req.params;
+		const { uid, type, category, amount, note } = req.body;
+
+		if (!uid || !type || !category || amount === undefined) {
+			return res
+				.status(400)
+				.json({ message: "Missing required fields." });
+		}
+
+		const user = await User.findOne({ userId: uid });
+
+		if (!user) {
+			return res.status(404).json({ message: "User not found" });
+		}
+
+		const newTransaction = { type, category, amount, note: note || "" };
+
+		const dateLog = user.logs.find((log) => log.date === date);
+
+		if (dateLog) {
+			dateLog.transactions.push(newTransaction);
+		} else {
+			user.logs.push({ date, transactions: [newTransaction] });
+		}
+
+		await user.save();
+
+		return res
+			.status(200)
+			.json({ message: "Transaction added successfully", user });
+	} catch (error) {
+		console.error(error.message);
+		return res.status(500).json({ message: "Internal Server Error" });
 	}
 });
 
@@ -17,7 +82,10 @@ router.get("/:uid/:date", async (req, res) => {
 	try {
 		const { user } = req.params.uid;
 		const { date } = req.params.date;
-	} catch (error) {}
+	} catch (error) {
+		console.log(error);
+		return res.status(500).send({ message: error.message });
+	}
 });
 
 export default router;

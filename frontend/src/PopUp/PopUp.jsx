@@ -1,13 +1,17 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
-const PopUp = () => {
+const PopUp = (Date) => {
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
 
   const [type, setType] = useState("Expense");
   const [submittedData, setSubmittedData] = useState([]);
   const [income, setIncome] = useState(0);
   const [expense, setExpense] = useState(0);
+
+  const date = Date;
+
+  console.log(date);
 
   const IncomeCategory = ["Salary", "Allowance", "Receivables"];
   const ExpenseCategory = [

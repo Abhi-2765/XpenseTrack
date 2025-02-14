@@ -1,8 +1,12 @@
-import React, { useState } from 'react';
+import { useContext } from 'react';
 import logo from '../assets/xpensetrack-logo.png';
 import { logout } from '../Configure/firebase';
+import { AppContext } from '../App';
 
-const Navbar = ({toggleSidebar}) => {
+const Navbar = () => {
+
+  const {toggleSidebar} = useContext(AppContext);
+
   return (
     <div className='z-50'>
       <div className="flex flex-row justify-between items-center max-h-12 bg-blue-950 px-4 py-2 border-b-2">

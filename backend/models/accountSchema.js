@@ -31,13 +31,20 @@ const DailyLogSchema = new mongoose.Schema({
 	transactions: [TransactionSchema],
 });
 
-const AccountSchema = new mongoose.Schema({
-	userId: {
-		type: String,
-		required: true,
-		unique: true,
+const AccountSchema = new mongoose.Schema(
+	{
+		userId: {
+			type: String,
+			required: true,
+			unique: true,
+		},
+		logs: [DailyLogSchema],
 	},
-	logs: [DailyLogSchema],
-});
+	{
+		collection: "user_data",
+	}
+);
+
+
 
 export const User = mongoose.model("User", AccountSchema);

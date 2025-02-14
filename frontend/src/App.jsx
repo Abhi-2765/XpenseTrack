@@ -9,48 +9,53 @@ import Login from './Components/Login';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from './Configure/firebase';
 
-export const Context = createContext();
+export const AppContext = createContext();
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
   const [page, setPage] = useState('');
   const [isLoggedin, setIsLoggedIn] = useState(false);
+  const [User, setUser] = useState("");
 
   useEffect(() => {
     onAuthStateChanged(auth, async(user) => {
       if(user){
+        setUser(user.uid);
         setPage('home');
         setIsLoggedIn(true);
-      }else{
+      } else {
         setIsLoggedIn(false);
       }
     })
-  }, [])
-  
+  }, []);
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
 
-  const value = { isOpen, setIsOpen, page, setPage, isLoggedin, setIsLoggedIn };
+  const value = { isOpen, setIsOpen, page, setPage, isLoggedin, setIsLoggedIn, toggleSidebar, User };
+
+  
 
   return (
-    <Context.Provider value={value}>
-      <Navbar toggleSidebar={toggleSidebar} />
+    <AppContext.Provider value={value}>
+      <Navbar />
       {isLoggedin ? (
         <>
-          <Sidebar toggleSidebar={toggleSidebar} />
+          <Sidebar />
           <div className="page-content">
             {page === 'home' && <Home />}
             {page === 'summary' && <Summary />}
           </div>
         </>
       ) : (
-        <Login />
+        <Login user={User} />
       )}
       <ToastContainer />
-    </Context.Provider>
+    </AppContext.Provider>
   );
 }
 
 export default App;
+
+

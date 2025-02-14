@@ -1,10 +1,13 @@
-import  { useContext } from 'react';
-import { Context } from '../App';
+import { useContext } from 'react';
+import { AppContext } from '../App';
 
+const Sidebar = () => {
+  const { isOpen, toggleSidebar, setPage } = useContext(AppContext);
 
-const Sidebar = ({ toggleSidebar }) => {
-
-  const { isOpen, setIsOpen, page, setPage} = useContext(Context);
+  const handleNavigation = (pageName) => {
+    setPage(pageName);
+    toggleSidebar();
+  };
 
   return (
     <>
@@ -15,13 +18,21 @@ const Sidebar = ({ toggleSidebar }) => {
         } w-64 z-30`}
       >
         <ul className="flex flex-col mt-10">
-          <li className="text-white font-poppins text-lg px-6 py-4 hover:text-gray-300 cursor-pointer hover:bg-blue-800">
+          <li
+            className="text-white font-poppins text-lg px-6 py-4 hover:text-gray-300 cursor-pointer hover:bg-blue-800"
+            onClick={() => handleNavigation('home')}
+          >
             Home
           </li>
-          <li className="text-white font-poppins text-lg px-6 py-4 hover:text-gray-300 cursor-pointer  hover:bg-blue-800">
+          <li
+            className="text-white font-poppins text-lg px-6 py-4 hover:text-gray-300 cursor-pointer hover:bg-blue-800"
+            onClick={() => handleNavigation('summary')}
+          >
             Summary
           </li>
-          <li className="text-white font-poppins text-lg px-6 py-4 hover:text-gray-300 cursor-pointe  hover:bg-blue-800">
+          <li
+            className="text-white font-poppins text-lg px-6 py-4 hover:text-gray-300 cursor-pointer hover:bg-blue-800"
+          >
             About
           </li>
         </ul>

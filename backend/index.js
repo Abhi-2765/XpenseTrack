@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import { PORT, DB_URL } from "./config.js";
 import { User } from "./models/accountSchema.js";
 import router from "./routes/accountsRoute.js";
+import createRouter from "./routes/createRoute.js";
 
 const app = express();
 
@@ -14,6 +15,7 @@ app.get("/", (req, res) => {
 	return res.status(200).send("Hello World");
 });
 
+app.use("/create", createRouter);
 app.use("/account", router);
 
 await mongoose

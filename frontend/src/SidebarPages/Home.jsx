@@ -1,17 +1,12 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import PopUp from "../PopUp/PopUp";
 
 const Home = () => {
+
   const [date, setDate] = useState("");
 
   return (
     <div className="p-6 max-w-screen-md mx-auto bg-gray-100 min-h-screen">
-
-      {/* Balance Summary */}
-      
-
-
-      {/* Date Picker */}
       <div className="mb-6">
         <label htmlFor="date-picker" className="block text-lg font-bold mb-2">
           Select Date:
@@ -20,17 +15,12 @@ const Home = () => {
           type="date"
           id="date-picker"
           value={date}
-          onChange={(e) => {setDate(e.target.value)}}
+          onChange={(e) => setDate(e.target.value)}
           className="border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
       </div>
 
-      {/* Conditional Rendering */}
-      {date === "" ? (
-        <p className="text-gray-500 text-center">Please select a date to continue.</p>
-      ) : (
-        <PopUp />
-      )}
+      {date && <PopUp Date={date}/>}
     </div>
   );
 };

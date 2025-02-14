@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import { useContext, useState } from "react";
 import google from "../assets/google.svg";
 import { useForm } from "react-hook-form";
 import { auth, signInWithGoogle } from "../Configure/firebase";
+import { AppContext } from "../App";
 
-const Login = ({ isLoggedIn }) => {
+const Login = (user) => {
   const {
     register,
     handleSubmit,
@@ -12,8 +13,9 @@ const Login = ({ isLoggedIn }) => {
     reset,
   } = useForm();
   const [signUp, setSignUp] = useState("SignUp");
-
   const password = watch("password");
+
+  const {isLoggedIn} = useContext(AppContext);
 
   const onSubmit = (data) => {
     alert(`${signUp} Successful!`);
@@ -134,7 +136,7 @@ const Login = ({ isLoggedIn }) => {
             </>
           ) : (
             <>
-              Don't have an account?{" "}
+              Need an account?{" "}
               <span
                 className="text-blue-500 cursor-pointer hover:underline"
                 onClick={() => setSignUp("SignUp")}
