@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import Navbar from './Components/Navbar';
 import Sidebar from './Components/Sidebar';
 import Home from './SidebarPages/Home';
@@ -8,37 +8,25 @@ import 'react-toastify/dist/ReactToastify.css';
 import Login from './Components/Login';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from './Configure/firebase';
-
-export const AppContext = createContext();
+import { useUserContext } from './Context/UserProvider.jsx';
 
 function App() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [page, setPage] = useState('');
-  const [isLoggedin, setIsLoggedIn] = useState(false);
-  const [User, setUser] = useState("");
+  const {page, setPage, Login: isLoggedin, setLogin, setUser, User } = useUserContext();
 
   useEffect(() => {
-    onAuthStateChanged(auth, async(user) => {
-      if(user){
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
         setUser(user.uid);
         setPage('home');
-        setIsLoggedIn(true);
+        setLogin(true); // Update login state
       } else {
-        setIsLoggedIn(false);
+        setLogin(false);
       }
-    })
-  }, []);
-
-  const toggleSidebar = () => {
-    setIsOpen(!isOpen);
-  };
-
-  const value = { isOpen, setIsOpen, page, setPage, isLoggedin, setIsLoggedIn, toggleSidebar, User };
-
-  
+    });
+  }, [setUser, setPage, setLogin]);
 
   return (
-    <AppContext.Provider value={value}>
+    <>
       <Navbar />
       {isLoggedin ? (
         <>
@@ -52,10 +40,9 @@ function App() {
         <Login user={User} />
       )}
       <ToastContainer />
-    </AppContext.Provider>
+    </>
   );
 }
 
 export default App;
-
 

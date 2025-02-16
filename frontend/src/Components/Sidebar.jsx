@@ -1,8 +1,7 @@
-import { useContext } from 'react';
-import { AppContext } from '../App';
+import { useUserContext } from '../Context/UserProvider';
 
 const Sidebar = () => {
-  const { isOpen, toggleSidebar, setPage } = useContext(AppContext);
+  const {isOpen, toggleSidebar, setPage} = useUserContext();
 
   const handleNavigation = (pageName) => {
     setPage(pageName);

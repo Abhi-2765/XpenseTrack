@@ -1,10 +1,10 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import google from "../assets/google.svg";
 import { useForm } from "react-hook-form";
-import { auth, signInWithGoogle } from "../Configure/firebase";
-import { AppContext } from "../App";
+import { signInWithGoogle } from "../Configure/firebase";
+import { useUserContext } from "../Context/UserProvider";
 
-const Login = (user) => {
+const Login = () => {
   const {
     register,
     handleSubmit,
@@ -15,14 +15,16 @@ const Login = (user) => {
   const [signUp, setSignUp] = useState("SignUp");
   const password = watch("password");
 
-  const {isLoggedIn} = useContext(AppContext);
+  // const {isLoggedIn} = useContext(AppContext);
+  const {Login} = useUserContext();
 
   const onSubmit = (data) => {
     alert(`${signUp} Successful!`);
+    console.log(data);
     reset();
   };
 
-  if (isLoggedIn) return null;
+  if (Login) return null;
 
   return (
     <div className="flex justify-center items-center h-screen bg-blue-950 text-white px-4">
@@ -62,11 +64,9 @@ const Login = (user) => {
                   message: "Password must be at least 8 characters",
                 },
                 pattern: {
-                  value:
-                    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,}$/,
-                  message:
-                    "Password must contain uppercase, lowercase, numbers, and special characters",
-                },
+                  value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/,
+                  message: "Password must contain at least 8 characters, including uppercase, lowercase, numbers, and special characters",
+                }                
               })}
             />
             {errors.password && (

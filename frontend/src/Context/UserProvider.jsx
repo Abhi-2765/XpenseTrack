@@ -8,6 +8,8 @@ export const UserProvider = ({ children }) => {
     const [date, setDate] = useState(null);
     const [isOpen, setIsOpen] = useState(false);
     const [page, setPage] = useState("");
+    const [transactions, setTransactions] = useState([]);
+    const [LoadError, setLoadError] = useState(null);
 
     const toggleSidebar = () => setIsOpen(prev => !prev);
 
@@ -22,7 +24,11 @@ export const UserProvider = ({ children }) => {
         setIsOpen,
         page,
         setPage,
-        toggleSidebar
+        toggleSidebar,
+        transactions,
+        setTransactions,
+        LoadError,
+        setLoadError
     };
 
     return (

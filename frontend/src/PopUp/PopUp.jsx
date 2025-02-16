@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useUserContext } from "../Context/UserProvider";
 
-const PopUp = (Date) => {
+const PopUp = () => {
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
 
   const [type, setType] = useState("Expense");
@@ -9,9 +10,9 @@ const PopUp = (Date) => {
   const [income, setIncome] = useState(0);
   const [expense, setExpense] = useState(0);
 
-  const date = Date;
+  const {date} = useUserContext();
 
-  console.log(date);
+  console.log("IN POPUP",date);
 
   const IncomeCategory = ["Salary", "Allowance", "Receivables"];
   const ExpenseCategory = [

@@ -1,11 +1,13 @@
-import { useContext } from 'react';
+// import { useContext } from 'react';
 import logo from '../assets/xpensetrack-logo.png';
 import { logout } from '../Configure/firebase';
-import { AppContext } from '../App';
+// import { AppContext } from '../App';
+import { useUserContext } from '../Context/UserProvider';
 
 const Navbar = () => {
 
-  const {toggleSidebar} = useContext(AppContext);
+  // const {toggleSidebar} = useContext(AppContext);
+  const {toggleSidebar} = useUserContext();
 
   return (
     <div className='z-50'>
