@@ -16,7 +16,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/create", createRouter);
-app.use("/account", router);
+app.use("/", router);
 
 await mongoose
 	.connect(DB_URL)

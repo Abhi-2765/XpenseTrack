@@ -3,19 +3,17 @@ import { useState, useContext, createContext } from "react";
 const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-    const [User, setUser] = useState(null);
+    const [userId, setUserId] = useState(null);
     const [Login, setLogin] = useState(false);
     const [date, setDate] = useState(null);
     const [isOpen, setIsOpen] = useState(false);
     const [page, setPage] = useState("");
-    const [transactions, setTransactions] = useState([]);
-    const [LoadError, setLoadError] = useState(null);
 
     const toggleSidebar = () => setIsOpen(prev => !prev);
 
     const value = {
-        User,
-        setUser,
+        userId,
+        setUserId,
         Login,
         setLogin,
         date,
@@ -25,10 +23,6 @@ export const UserProvider = ({ children }) => {
         page,
         setPage,
         toggleSidebar,
-        transactions,
-        setTransactions,
-        LoadError,
-        setLoadError
     };
 
     return (

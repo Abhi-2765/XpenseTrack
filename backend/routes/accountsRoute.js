@@ -1,86 +1,52 @@
-import mongoose from "mongoose";
 import express from "express";
 import { User } from "../models/accountSchema.js";
 
 const router = express.Router();
 
-// router.post("/create", async (req, res) => {
-// 	try {
-// 		const { uid } = req.body;
-
-// 		if (!uid) {
-// 			return res.status(400).json({
-// 				message: "Missing required field: uid",
-// 			});
-// 		}
-
-// 		const existingUser = await User.findOne({ userId: uid });
-// 		if (existingUser) {
-// 			return res.status(409).json({
-// 				message: "User already exists with this uid",
-// 			});
-// 		}
-
-// 		const newUser = new User({
-// 			userId: uid,
-// 			logs: [],
-// 		});
-
-// 		await newUser.save();
-
-// 		return res.status(201).json({
-// 			message: "User created successfully",
-// 			user: newUser,
-// 		});
-// 	} catch (error) {
-// 		console.error(error.message);
-// 		return res.status(500).json({
-// 			message: "Internal Server Error",
-// 		});
-// 	}
-// });
-
-router.post("/:date", async (req, res) => {
+router.post("/transactions", async (req, res) => {
 	try {
-		const { date } = req.params;
-		const { uid, type, category, amount, note } = req.body;
+		const { uid, date, transaction } = req.body;
+		const { type, category, amount, note = "" } = transaction;
 
 		if (!uid || !type || !category || amount === undefined) {
-			return res
-				.status(400)
-				.json({ message: "Missing required fields." });
+			return res.status(400).json({ message: "Missing required fields" });
 		}
 
-		const user = await User.findOne({ userId: uid });
+		const user = await User.findOneAndUpdate(
+			{ userId: uid, "logs.date": date },
+			{
+				$push: {
+					"logs.$.transactions": { type, category, amount, note },
+				},
+			},
+			{ new: true }
+		);
 
 		if (!user) {
-			return res.status(404).json({ message: "User not found" });
+			await User.findOneAndUpdate(
+				{ userId: uid },
+				{
+					$push: {
+						logs: {
+							date,
+							transactions: [{ type, category, amount, note }],
+						},
+					},
+				},
+				{ upsert: true, new: true }
+			);
 		}
 
-		const newTransaction = { type, category, amount, note: note || "" };
-
-		const dateLog = user.logs.find((log) => log.date === date);
-
-		if (dateLog) {
-			dateLog.transactions.push(newTransaction);
-		} else {
-			user.logs.push({ date, transactions: [newTransaction] });
-		}
-
-		await user.save();
-
-		return res
-			.status(200)
-			.json({ message: "Transaction added successfully", user });
+		res.status(200).json({ message: "Transaction added successfully" });
 	} catch (error) {
-		console.error(error.message);
-		return res.status(500).json({ message: "Internal Server Error" });
+		console.error(error);
+		res.status(500).json({ message: "Internal Server Error" });
 	}
 });
 
-router.post("/transactions", async (req, res) => {
+router.get("/transactions", async (req, res) => {
 	try {
-		const { uid, date } = req.body; 
+		const { uid, date } = req.query;
 
 		if (!uid || !date) {
 			return res
@@ -88,25 +54,53 @@ router.post("/transactions", async (req, res) => {
 				.json({ message: "Missing required fields: uid and date" });
 		}
 
-		const user = await User.findOne({ userId: uid });
-		if (!user) {
-			return res.status(404).json({ message: "User not found" });
+		const user = await User.findOne(
+			{ userId: uid },
+			{ logs: { $elemMatch: { date } } }
+		);
+
+		if (!user || !user.logs.length) {
+			return res.status(200).json({
+				message: "Transactions retrieved successfully",
+				transactions: [],
+			});
 		}
 
-		const dateLog = user.logs.find((log) => log.date === date);
-		if (!dateLog) {
-			return res
-				.status(404)
-				.json({ message: "No transactions found for this date" });
-		}
-
-		return res.status(200).json({
+		res.status(200).json({
 			message: "Transactions retrieved successfully",
-			transactions: dateLog.transactions,
+			transactions: user.logs[0].transactions || [],
 		});
 	} catch (error) {
 		console.error(error);
-		return res.status(500).json({ message: "Internal Server Error" });
+		res.status(500).json({ message: "Internal Server Error" });
+	}
+});
+
+router.delete("/transactions", async (req, res) => {
+	try {
+		const { uid, date, transactionId } = req.query;
+
+		if (!uid || !date || !transactionId) {
+			return res.status(400).json({ message: "Missing required fields" });
+		}
+
+		const user = await User.findOneAndUpdate(
+			{ userId: uid, "logs.date": date },
+			{ $pull: { "logs.$.transactions": { _id: transactionId } } },
+			{ new: true }
+		);
+
+		if (!user) {
+			return res.status(404).json({ message: "Transaction not found" });
+		}
+
+		res.status(200).json({
+			message: "Transaction deleted successfully",
+			user,
+		});
+	} catch (error) {
+		console.error(error);
+		res.status(500).json({ message: "Internal Server Error" });
 	}
 });
 

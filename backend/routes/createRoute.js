@@ -4,7 +4,7 @@ import { User } from "../models/accountSchema.js";
 
 const createRouter = express.Router();
 
-createRouter.post("/", async (req, res) => {
+createRouter.post("/user", async (req, res) => {
 	try {
 		const { uid } = req.body;
 

@@ -11,19 +11,19 @@ import { auth } from './Configure/firebase';
 import { useUserContext } from './Context/UserProvider.jsx';
 
 function App() {
-  const {page, setPage, Login: isLoggedin, setLogin, setUser, User } = useUserContext();
+  const {page, setPage, Login: isLoggedin, setLogin, setUserId, userId } = useUserContext();
 
   useEffect(() => {
     onAuthStateChanged(auth, async (user) => {
       if (user) {
-        setUser(user.uid);
+        setUserId(user.uid);
         setPage('home');
         setLogin(true); // Update login state
       } else {
         setLogin(false);
       }
     });
-  }, [setUser, setPage, setLogin]);
+  }, [setUserId, setPage, setLogin]);
 
   return (
     <>
@@ -37,7 +37,7 @@ function App() {
           </div>
         </>
       ) : (
-        <Login user={User} />
+        <Login user={userId} />
       )}
       <ToastContainer />
     </>

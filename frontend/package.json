@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@material-tailwind/react": "^2.1.10",
+    "axios": "^1.8.1",
     "express": "^4.21.2",
     "firebase": "^11.0.2",
     "fullcalendar": "^6.1.15",
@@ -20,6 +21,7 @@
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.54.0",
     "react-router-dom": "^7.0.2",
+    "react-spinners": "^0.15.0",
     "react-toastify": "^10.0.6"
   },
   "devDependencies": {
