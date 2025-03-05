@@ -18,7 +18,7 @@ const PopUp = () => {
   useEffect(() => {
     async function fetchTransactions() {
       try {
-        const response = await axios.get(`http://localhost:3000/transactions?uid=${userId}&date=${date}`);
+        const response = await axios.get(`https://xpensetrack-backend.onrender.com/transactions?uid=${userId}&date=${date}`);
         setTransactions(response.data.transactions || []);
         let totalIncome = 0, totalExpense = 0;
         response.data.transactions.forEach((tx) => {
@@ -39,7 +39,7 @@ const PopUp = () => {
     const transaction = { ...data, type: type.toLowerCase(), amount: parseFloat(data.amount), note: data.note || "" };
     console.log(transaction);
     try {
-      const response = await axios.post("http://localhost:3000/transactions", { uid: userId, date, transaction });
+      const response = await axios.post("https://xpensetrack-backend.onrender.com/transactions", { uid: userId, date, transaction });
       if (response.status === 200) {
         setTransactions([...transactions, transaction]);
         if (type === "Expense") setExpense(expense + transaction.amount);
@@ -54,7 +54,7 @@ const PopUp = () => {
 
   const handleDelete = async (index, id) => {
     try {
-      await axios.delete(`http://localhost:3000/transactions?uid=${userId}&date=${date}&transactionId=${id}`);
+      await axios.delete(`https://xpensetrack-backend.onrender.com/transactions?uid=${userId}&date=${date}&transactionId=${id}`);
       
       const entryToDelete = transactions[index];
       const amount = parseFloat(entryToDelete.amount);
