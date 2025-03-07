@@ -22,7 +22,7 @@ const PopUp = () => {
         setTransactions(response.data.transactions || []);
         let totalIncome = 0, totalExpense = 0;
         response.data.transactions.forEach((tx) => {
-          tx.type === "Income" ? totalIncome += tx.amount : totalExpense += tx.amount;
+          tx.type === "income" ? totalIncome += tx.amount : totalExpense += tx.amount;
         });
         setIncome(totalIncome);
         setExpense(totalExpense);
@@ -54,8 +54,6 @@ const PopUp = () => {
 
   const handleDelete = async (index, id) => {
     try {
-      await axios.delete(`https://xpensetrack-backend.onrender.com/transactions?uid=${userId}&date=${date}&transactionId=${id}`);
-      
       const entryToDelete = transactions[index];
       const amount = parseFloat(entryToDelete.amount);
 
@@ -63,6 +61,8 @@ const PopUp = () => {
       else setIncome(income - amount);
 
       setTransactions(transactions.filter((_, i) => i !== index));
+      
+      await axios.delete(`https://xpensetrack-backend.onrender.com/transactions?uid=${userId}&date=${date}&transactionId=${id}`);
     } catch (error) {
       console.error("Error deleting transaction:", error);
     }
@@ -81,13 +81,13 @@ const PopUp = () => {
         <div className="flex justify-around mb-4">
           <button type="button" 
             className={`px-4 py-2 rounded ${type === "Income" ? "bg-green-500 text-white" : "bg-gray-200 text-black"}`}
-            onClick={() => setType("Income")}
+            onClick={() => {setType("Income"); reset(); }}
           >
             Income
           </button>
           <button type="button" 
             className={`px-4 py-2 rounded ${type === "Expense" ? "bg-red-500 text-white" : "bg-gray-200 text-black"}`}
-            onClick={() => setType("Expense")}
+            onClick={() => {setType("Expense"); reset();}}
           >
             Expense
           </button>
@@ -141,7 +141,7 @@ const PopUp = () => {
       <div className="p-4 bg-gray-50 mt-4 rounded-md">
         <h3 className="text-lg font-bold mb-3">Accounts</h3>
         {transactions.map((entry, index) => (
-          <div key={index} className={`flex justify-between items-center p-2 border-l-4 ${entry.type === "Income" ? "border-green-500" : "border-red-500"} bg-white shadow-sm rounded mb-2`}>
+          <div key={index} className={`flex justify-between items-center p-2 border-l-4 ${entry.type === "income" ? "border-green-500" : "border-red-500"} bg-white shadow-sm rounded mb-2`}>
             <p className="flex-1">{entry.category}{entry.note ? `: ${entry.note}` : ""}</p>
             <span className="font-bold text-gray-700">₹{entry.amount.toFixed(2)}</span>
             <button onClick={() => handleDelete(index, entry._id)} className="text-red-500 hover:text-red-700">🗑</button>

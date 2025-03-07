@@ -28,7 +28,9 @@ function App() {
   return (
     <>
       <Navbar />
-      {isLoggedin ? (
+      {isLoggedin == false ? (
+        <Login user={userId} />
+      ) : (
         <>
           <Sidebar />
           <div className="page-content">
@@ -36,8 +38,6 @@ function App() {
             {page === 'summary' && <Summary />}
           </div>
         </>
-      ) : (
-        <Login user={userId} />
       )}
       <ToastContainer />
     </>
