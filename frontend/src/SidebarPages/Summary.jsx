@@ -1,6 +1,6 @@
 const Summary = () => {
   return (
-    <div>
+    <div className="bg-white">
       
     </div>
   )

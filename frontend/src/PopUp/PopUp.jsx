@@ -39,7 +39,9 @@ const PopUp = () => {
     const transaction = { ...data, type: type.toLowerCase(), amount: parseFloat(data.amount), note: data.note || "" };
     console.log(transaction);
     try {
+      console.log("submitting");
       const response = await axios.post("https://xpensetrack-backend.onrender.com/transactions", { uid: userId, date, transaction });
+      console.log("submitted");
       if (response.status === 200) {
         setTransactions([...transactions, transaction]);
         if (type === "Expense") setExpense(expense + transaction.amount);

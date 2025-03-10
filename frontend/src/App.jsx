@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Navbar from './Components/Navbar';
 import Sidebar from './Components/Sidebar';
 import Home from './SidebarPages/Home';
@@ -12,25 +12,30 @@ import { useUserContext } from './Context/UserProvider.jsx';
 
 function App() {
   const {page, setPage, Login: isLoggedin, setLogin, setUserId, userId } = useUserContext();
+  const [authLoading, setAuthLoading] = useState(true);
 
   useEffect(() => {
-    onAuthStateChanged(auth, async (user) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setUserId(user.uid);
         setPage('home');
-        setLogin(true); // Update login state
+        setLogin(true);
       } else {
         setLogin(false);
       }
+      setAuthLoading(false);
     });
+    return () => unsubscribe();
   }, [setUserId, setPage, setLogin]);
+
+  if (authLoading) {
+    return <div className="flex h-screen items-center justify-center text-xl">Loading...</div>;
+  }
 
   return (
     <>
       <Navbar />
-      {isLoggedin == false ? (
-        <Login user={userId} />
-      ) : (
+      {isLoggedin ? (
         <>
           <Sidebar />
           <div className="page-content">
@@ -38,6 +43,8 @@ function App() {
             {page === 'summary' && <Summary />}
           </div>
         </>
+      ) : (
+        <Login user={userId} />
       )}
       <ToastContainer />
     </>
@@ -45,4 +52,3 @@ function App() {
 }
 
 export default App;
-
