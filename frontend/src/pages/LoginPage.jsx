@@ -13,22 +13,32 @@ const Login = () => {
 
   const navigate = useNavigate();
 
-  const { setIsLoggedIn } = useAuth();
+  const { setIsLoggedIn, setIsVerified } = useAuth();
 
   const onSubmit = async (data) => {
     console.log("Login data:", data);
     await new Promise((resolve) => setTimeout(resolve, 1500));
 
     try {
-      const response = axios.post("http://localhost:5000/auth/login", {
+      const response = await axios.post("http://localhost:5000/auth/login", {
         email: data.email,
         password: data.password
       }, { withCredentials: true })
 
-      setIsLoggedIn(response.status)
-      navigate("http://localhost:5173/dashboard");
+      if (response.status === 200) {
+        setIsLoggedIn(true);
+        setIsVerified(true);
+        navigate("/dashboard");
+      }
     } catch (error) {
       console.error(error);
+      if (error.response?.status === 403) {
+        // User is unverified, redirect to OTP page
+        // We can assume the email is what they typed
+        navigate("/verify-otp", { state: { email: data.email } });
+      } else {
+        alert("Login failed. Please check your credentials.");
+      }
     }
   };
 

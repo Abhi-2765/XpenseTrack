@@ -1,8 +1,10 @@
+import authenticateUser from '../middleware/authenticationMiddleware.js';
+import { createBudget } from '../controllers/budgetController.js';
+
 import express from 'express';
+
 const router = express.Router();
 
-router.get('/', (req, res) => {
-  res.send('Budget route is working!');
-});
+router.post('/add', authenticateUser, createBudget);
 
 export default router;

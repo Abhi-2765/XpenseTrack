@@ -28,7 +28,7 @@ const BudgetPage = () => {
       <div className="flex flex-wrap items-center justify-between gap-4 mb-10">
         <h1 className="text-3xl font-bold">Budgets</h1>
         <button className="flex items-center gap-2 px-4 py-2 bg-sky-500 hover:bg-sky-600 text-black font-semibold rounded-lg transition-all shadow-md hover:shadow-lg"
-        onClick={handleNewBudgetButton}>
+          onClick={handleNewBudgetButton}>
           <Plus className="w-4 h-4" />
           <span>New Budget</span>
         </button>

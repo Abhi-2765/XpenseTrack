@@ -38,6 +38,19 @@ export const AuthProvider = ({ children }) => {
         verifyUser();
     }, []);
 
+    const logout = async () => {
+        try {
+            await axios.post("http://localhost:5000/auth/logout", {}, {
+                withCredentials: true,
+            });
+            setIsLoggedIn(false);
+            setIsVerified(false);
+            setEmail(null);
+        } catch (error) {
+            console.error("Logout failed:", error);
+        }
+    };
+
     return (
         <AuthContext.Provider
             value={{
@@ -48,6 +61,7 @@ export const AuthProvider = ({ children }) => {
                 setIsLoggedIn,
                 setIsVerified,
                 setEmail,
+                logout,
             }}
         >
             {children}

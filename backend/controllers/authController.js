@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import { generateTokenAndSetCookie } from "../utils/generateTokenAndSetCookie.js";
 import User from "../models/User.js";
 import mailSender from "../utils/forgetPasswordMailSender.js";
+import { sendOtpToEmail } from "./authOtpController.js";
 
 export const register = async (req, res) => {
     try {
@@ -23,8 +24,51 @@ export const register = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, salt);
 
         const newUser = new User({
-            status: true,
+            name,
+            email,
+            password: hashedPassword,
+            isVerified: false
+        });
+
+        await newUser.save();
+
+        // Send OTP automatically
+        await sendOtpToEmail(email);
+
+        res.status(201).json({ message: "User registered successfully. Please verify your email.", status: true });
+
+    } catch (error) {
+        console.log("Error registering user:", error);
+        res.status(500).json({ message: "Internal server error", status: false });
+    }
+};
+
+export const login = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        const user = await User.findOne({ email });
+
+        if (!user) {
+            return res.status(400).json({ message: "Invalid credentials", status: false });
+        }
+
+        const isPasswordCorrect = await bcrypt.compare(password, user.password);
+        if (!isPasswordCorrect) {
+            return res.status(400).json({ message: "Invalid credentials", status: false });
+        }
+
+        if (!user.isVerified) {
+            return res.status(403).json({ message: "Account not verified. Please verify your email.", status: false });
+        }
+
+        generateTokenAndSetCookie(user._id, res);
+
+        res.status(200).json({
+            _id: user._id,
+            name: user.name,
             email: user.email,
+            message: "Logged in successfully",
+            status: true
         });
 
     } catch (error) {
@@ -33,7 +77,6 @@ export const register = async (req, res) => {
     }
 };
 
-// Logout controller
 export const logout = (req, res) => {
     try {
         res.clearCookie("token");
@@ -69,8 +112,6 @@ export const forgetPassword = async (req, res) => {
 
 export const checkAuth = async (req, res) => {
     const token = req.cookies?.token;
-    console.log(token);
-    console.log(req.cookies);
 
     if (!token) return res.status(401).json({ status: false });
     try {

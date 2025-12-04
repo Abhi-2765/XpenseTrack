@@ -46,7 +46,7 @@ const BudgetChip = ({ type, allotedAmount, spentAmount, emoji }) => {
       </div>
 
       {/* Footer */}
-      <div className="flex justify-between text-sm ">
+      <div className="flex justify-between text-sm mb-5">
         <p className="text-white">
           ${spentAmount} / ${allotedAmount}
         </p>
@@ -55,8 +55,8 @@ const BudgetChip = ({ type, allotedAmount, spentAmount, emoji }) => {
             spentAmount > allotedAmount
               ? "text-red-400 font-bold"
               : percentage >= 85
-              ? "text-yellow-400 font-bold"
-              : "text-gray-400"
+                ? "text-yellow-400 font-bold"
+                : "text-gray-400"
           }
         >
           {percentage}%

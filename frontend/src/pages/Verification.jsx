@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import AuthLayout from "../components/AuthLayout";
 import { useAuth } from "../context/AuthProvider";
@@ -11,9 +11,17 @@ const Verification = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const intervalRef = useRef(null);
 
-  const { email } = useAuth();
+  const { email: contextEmail, setIsLoggedIn, setIsVerified, setEmail } = useAuth();
+  const location = useLocation();
+  const email = location.state?.email || contextEmail;
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (email) {
+      setEmail(email);
+    }
+  }, [email, setEmail]);
 
   useEffect(() => {
     intervalRef.current = setInterval(() => {
@@ -76,6 +84,8 @@ const Verification = () => {
       }, { withCredentials: true });
 
       if (response.status === 200) {
+        setIsLoggedIn(true);
+        setIsVerified(true);
         navigate("/dashboard");
       }
     } catch (error) {

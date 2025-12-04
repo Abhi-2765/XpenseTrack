@@ -3,19 +3,37 @@ import DashboardSummaryChips from "../components/DashboardSummaryChips";
 import ExportButton from "../components/ExportButton";
 import PieChart from "../components/PieChart";
 import SpendingTrends from "../components/SpendingTrends";
+import { useAuth } from "../context/AuthProvider";
+import { useNavigate } from "react-router-dom";
 
 /**
  * Dashboard
  * Main analytics view showing key summaries and visual trends.
  */
 const Dashboard = () => {
+  const { logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await logout();
+    navigate("/login");
+  };
+
   return (
     <div className="relative min-h-screen bg-[#111827] text-white font-['Spline_Sans']">
       <main className="flex-1 px-6 sm:px-10 py-8 max-w-screen-2xl mx-auto">
         {/* Header */}
         <div className="flex items-center justify-between mb-8 flex-wrap gap-4">
           <h1 className="text-3xl font-bold">Dashboard</h1>
-          <ExportButton />
+          <div className="flex gap-3">
+            <ExportButton />
+            <button
+              onClick={handleLogout}
+              className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg font-semibold transition-colors"
+            >
+              Logout
+            </button>
+          </div>
         </div>
 
         {/* Summary Cards */}

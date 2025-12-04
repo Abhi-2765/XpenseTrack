@@ -29,15 +29,9 @@ const Signup = () => {
       });
 
       if (response.status === 201 || response.status === 200) {
-        await axios.post("http://localhost:5000/auth-otp/send-otp", {
-          email: data.email,
-        }, {
-          withCredentials: true,
-          headers: { "Content-Type": "application/json" },
-        });
-
+        // OTP is sent automatically by the backend
         setEmail(data.email);
-        navigate("/verify-otp");
+        navigate("/verify-otp", { state: { email: data.email } });
       }
     } catch (error) {
       if (error.response?.status === 400) {

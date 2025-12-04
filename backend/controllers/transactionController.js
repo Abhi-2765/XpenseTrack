@@ -4,14 +4,15 @@ import Transaction from "../models/Transaction.js";
 // Add a new transaction
 export const addTransaction = async (req, res) => {
     try {
-        const { amount, type, category, note } = req.body;
+        const { amount, type, category, date, note } = req.body;
 
         const newTransaction = new Transaction({
-            userId: req.user.userId,
-            amount,
-            type,
-            category,
-            note,
+            userId: req.userId,
+            amount: amount,
+            type: type,
+            category: category,
+            date: date,
+            note: note,
         });
 
         const savedTransaction = await newTransaction.save();
@@ -27,11 +28,11 @@ export const getTransactionHistory = async (req, res) => {
     try {
         const { page = 1, limit = 10, type, category, date } = req.body;
 
-        if (!mongoose.Types.ObjectId.isValid(req.user.userId)) {
+        if (!mongoose.Types.ObjectId.isValid(req.userId)) {
             return res.status(400).json({ message: "Invalid userId" });
         }
 
-        const query = { userId: new mongoose.Types.ObjectId(req.user.userId) };
+        const query = { userId: req.userId };
         if (type) query.type = type;
         if (category) query.category = category;
         if (date) query.date = { $eq: new Date(date) };

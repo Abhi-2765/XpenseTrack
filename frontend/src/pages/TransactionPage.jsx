@@ -7,7 +7,7 @@ import TransactionChip from "../components/TransactionChip"
 import { Plus, CalendarDays, Tags, DollarSign, ChevronLeft, ChevronRight } from "lucide-react";
 
 const TransactionPage = () => {
-  
+
   const limit = 10;
 
   const [amountRange, setAmountRange] = useState({ min: "", max: "" });
@@ -23,17 +23,16 @@ const TransactionPage = () => {
       try {
         setLoading(true);
 
-        const userId = "68ba6ccf871220643b830137";
-
         const response = await axios.post(
           "http://localhost:5000/transactions/history",
           {
-            userId,
             page,
             limit,
             category: category || undefined,
             date: selectedDate || undefined,
-          }
+          }, {
+          withCredentials: true,
+        }
         );
 
         const { transactions, totalPages } = response.data;
@@ -158,7 +157,7 @@ const TransactionPage = () => {
               <TransactionChip
                 key={tx._id}
                 note={tx.note}
-                date={tx.date}
+                date={tx.date.slice(0, 10).split("-").reverse().join("-")}
                 category={tx.category}
                 amount={tx.amount}
                 type={tx.type}
@@ -172,11 +171,10 @@ const TransactionPage = () => {
         <button
           onClick={handlePrev}
           disabled={page === 1}
-          className={`flex items-center gap-1 px-3 py-2 rounded-lg text-sm font-medium transition-all ${
-            page === 1
-              ? "bg-gray-800 text-gray-500 cursor-not-allowed"
-              : "bg-gray-900 hover:bg-gray-800 text-white"
-          }`}
+          className={`flex items-center gap-1 px-3 py-2 rounded-lg text-sm font-medium transition-all ${page === 1
+            ? "bg-gray-800 text-gray-500 cursor-not-allowed"
+            : "bg-gray-900 hover:bg-gray-800 text-white"
+            }`}
         >
           <ChevronLeft className="w-4 h-4" /> Prev
         </button>
@@ -189,11 +187,10 @@ const TransactionPage = () => {
         <button
           onClick={handleNext}
           disabled={page === totalPages}
-          className={`flex items-center gap-1 px-3 py-2 rounded-lg text-sm font-medium transition-all ${
-            page === totalPages
-              ? "bg-gray-800 text-gray-500 cursor-not-allowed"
-              : "bg-gray-900 hover:bg-gray-800 text-white"
-          }`}
+          className={`flex items-center gap-1 px-3 py-2 rounded-lg text-sm font-medium transition-all ${page === totalPages
+            ? "bg-gray-800 text-gray-500 cursor-not-allowed"
+            : "bg-gray-900 hover:bg-gray-800 text-white"
+            }`}
         >
           Next <ChevronRight className="w-4 h-4" />
         </button>

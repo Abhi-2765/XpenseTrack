@@ -2,6 +2,7 @@ import User from "../models/User.js";
 import OTP from "../models/Otp.js";
 import otpGenerator from "otp-generator";
 import mailSender from "../utils/mailSender.js";
+import { generateTokenAndSetCookie } from "../utils/generateTokenAndSetCookie.js";
 
 function generateOTP() {
   return otpGenerator.generate(6, {
@@ -11,6 +12,13 @@ function generateOTP() {
   });
 }
 
+export const sendOtpToEmail = async (email) => {
+  const otp = generateOTP();
+  const newOTP = new OTP({ email, otp });
+  await newOTP.save();
+  return await mailSender(email, otp);
+};
+
 export const sendOTP = async (req, res) => {
   try {
     const { email } = req.body;
@@ -19,11 +27,12 @@ export const sendOTP = async (req, res) => {
       return res.status(400).json({ success: false, message: "Email is required" });
     }
 
-    const otp = generateOTP();
-    const newOTP = new OTP({ email, otp });
-    await newOTP.save();
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
 
-    const result = await mailSender(email, otp);
+    const result = await sendOtpToEmail(email);
 
     res
       .status(200)
@@ -55,7 +64,10 @@ export const verifyOTP = async (req, res) => {
     }
 
     await OTP.deleteOne({ email });
-    await User.updateOne({ email }, { $set: { isVerified: true } });
+    const user = await User.findOneAndUpdate({ email }, { $set: { isVerified: true } });
+
+    // Generate token for immediate login
+    generateTokenAndSetCookie(user._id, res);
 
     return res
       .status(200)

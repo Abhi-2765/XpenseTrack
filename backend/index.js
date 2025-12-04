@@ -6,6 +6,7 @@ import connectMongoDB from './connectDB.js';
 import authRoute from './routes/authRoute.js'
 import authOtpRoute from './routes/authOtpRoute.js'
 import transactionRoute from './routes/transactionRoute.js';
+import budgetRoute from './routes/budgetRoute.js';
 import cookieParser from 'cookie-parser';
 
 dotenv.config();
@@ -48,6 +49,7 @@ app.get('/', (req, res) => {
 app.use('/auth', authRoute);
 app.use('/auth-otp', authOtpRoute);
 app.use('/transactions', transactionRoute);
+app.use('/budget', budgetRoute)
 
 app.use((req, res) => {
   res.status(404).send('404 Not Found');

@@ -2,7 +2,6 @@ import axios from "axios";
 import { useForm } from "react-hook-form";
 import { DollarSign, Calendar, Tag, FileText } from "lucide-react";
 
-
 const categories = {
   expense: [
     { label: "🍔 Food", value: "food" },
@@ -42,16 +41,16 @@ const AddTransaction = () => {
 
   const onSubmit = async (data) => {
     try {
-      const userId = "68ba6ccf871220643b830137";
-      const response = await axios.post("http://localhost:5000/transactions/add", 
+      const response = await axios.post("http://localhost:5000/transactions/add",
         {
-          userId: userId,
           amount: data.amount,
-          type: data.type, 
+          type: data.type,
           category: data.category,
           date: data.date,
           note: data.notes
-        }
+        }, {
+        withCredentials: true,
+      }
       )
 
       reset({
@@ -129,11 +128,10 @@ const AddTransaction = () => {
                   />
                   <label
                     htmlFor="expense"
-                    className={`flex-1 text-center py-3 px-6 rounded-lg cursor-pointer transition-all duration-300 font-medium ${
-                      transactionType === "expense"
+                    className={`flex-1 text-center py-3 px-6 rounded-lg cursor-pointer transition-all duration-300 font-medium ${transactionType === "expense"
                         ? "bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-lg transform scale-[0.98]"
                         : "text-slate-400 hover:text-white hover:bg-slate-800"
-                    }`}
+                      }`}
                   >
                     📉 Expense
                   </label>
@@ -147,11 +145,10 @@ const AddTransaction = () => {
                   />
                   <label
                     htmlFor="income"
-                    className={`flex-1 text-center py-3 px-6 rounded-lg cursor-pointer transition-all duration-300 font-medium ${
-                      transactionType === "income"
+                    className={`flex-1 text-center py-3 px-6 rounded-lg cursor-pointer transition-all duration-300 font-medium ${transactionType === "income"
                         ? "bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-lg transform scale-[0.98]"
                         : "text-slate-400 hover:text-white hover:bg-slate-800"
-                    }`}
+                      }`}
                   >
                     📈 Income
                   </label>
