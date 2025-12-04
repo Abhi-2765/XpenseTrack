@@ -1,8 +1,8 @@
-import AddButton from "../components/AddButton";
-import DashboardSummaryChips from "../components/DashboardSummaryChips";
+import AddButton from "../components/dashboardComponents/AddButton";
+import DashboardSummaryChips from "../components/dashboardComponents/DashboardSummaryChips";
 import ExportButton from "../components/ExportButton";
-import PieChart from "../components/PieChart";
-import SpendingTrends from "../components/SpendingTrends";
+import PieChart from "../components/dashboardComponents/PieChart";
+import SpendingTrends from "../components/dashboardComponents/SpendingTrends";
 import { useAuth } from "../context/AuthProvider";
 import { useNavigate } from "react-router-dom";
 

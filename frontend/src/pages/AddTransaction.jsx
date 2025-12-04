@@ -129,8 +129,8 @@ const AddTransaction = () => {
                   <label
                     htmlFor="expense"
                     className={`flex-1 text-center py-3 px-6 rounded-lg cursor-pointer transition-all duration-300 font-medium ${transactionType === "expense"
-                        ? "bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-lg transform scale-[0.98]"
-                        : "text-slate-400 hover:text-white hover:bg-slate-800"
+                      ? "bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-lg transform scale-[0.98]"
+                      : "text-slate-400 hover:text-white hover:bg-slate-800"
                       }`}
                   >
                     📉 Expense
@@ -146,8 +146,8 @@ const AddTransaction = () => {
                   <label
                     htmlFor="income"
                     className={`flex-1 text-center py-3 px-6 rounded-lg cursor-pointer transition-all duration-300 font-medium ${transactionType === "income"
-                        ? "bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-lg transform scale-[0.98]"
-                        : "text-slate-400 hover:text-white hover:bg-slate-800"
+                      ? "bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-lg transform scale-[0.98]"
+                      : "text-slate-400 hover:text-white hover:bg-slate-800"
                       }`}
                   >
                     📈 Income
