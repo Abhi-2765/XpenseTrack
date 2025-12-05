@@ -100,11 +100,11 @@ const AddBudget = () => {
 
                 <input
                   placeholder="Add an emoji..."
-                  maxLength={1}
+                  maxLength={3}
                   {...register("icon", {
                     required: "Icon is required",
                     maxLength: {
-                      value: 1,
+                      value: 3,
                       message: "Only one emoji allowed",
                     },
                   })}

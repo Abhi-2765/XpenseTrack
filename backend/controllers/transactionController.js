@@ -16,7 +16,7 @@ export const addTransaction = async (req, res) => {
         });
 
         const savedTransaction = await newTransaction.save();
-        res.status(201).json({ message: "Transaction added successfully", savedTransaction });
+        res.status(201).json({ message: "Transaction added successfully" });
     } catch (error) {
         console.error("Error adding transaction:", error);
         res.status(500).json({ message: "Something went wrong. Please try again later." });
@@ -42,9 +42,11 @@ export const getTransactionHistory = async (req, res) => {
 
         const total = await Transaction.countDocuments(query);
         const transactions = await Transaction.find(query)
-            .sort({ date: -1 })
+            .sort({ createdAt: -1 })
             .skip((pageNum - 1) * limitNum)
-            .limit(limitNum);
+            .limit(limitNum)
+            .select("-userId")
+            ;
 
         res.status(200).json({
             totalPages: Math.ceil(total / limitNum),

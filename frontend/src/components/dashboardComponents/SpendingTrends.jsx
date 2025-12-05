@@ -2,15 +2,9 @@
 import { useState } from "react";
 import { LineChart } from "@mui/x-charts/LineChart";
 
-/**
- * SpendingTrends
- * Displays income vs expense trends (monthly or daily)
- * Uses MUI LineChart and adapts to all screen sizes
- */
 export default function SpendingTrends() {
   const [period, setPeriod] = useState("monthly");
 
-  // Sample data
   const monthlyData = {
     x: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
     income: [4000, 4200, 4600, 4800, 5000, 5300, 5500, 5600, 5800, 6000, 6200, 6400],
@@ -33,9 +27,8 @@ export default function SpendingTrends() {
           <button
             key={p}
             onClick={() => setPeriod(p)}
-            className={`px-4 py-1.5 text-sm font-semibold rounded-full transition-all ${
-              period === p ? "bg-blue-500 text-white" : "bg-gray-700 text-gray-300 hover:text-white"
-            }`}
+            className={`px-4 py-1.5 text-sm font-semibold rounded-full transition-all ${period === p ? "bg-blue-500 text-white" : "bg-gray-700 text-gray-300 hover:text-white"
+              }`}
           >
             {p[0].toUpperCase() + p.slice(1)}
           </button>

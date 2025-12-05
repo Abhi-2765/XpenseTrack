@@ -1,4 +1,4 @@
-const BudgetChip = ({ type, allotedAmount, spentAmount, emoji }) => {
+const BudgetChip = ({ name, type, allotedAmount, spentAmount, emoji }) => {
   const percentage = Math.round((spentAmount / allotedAmount) * 100);
   const remaining = allotedAmount - spentAmount;
 
@@ -31,7 +31,7 @@ const BudgetChip = ({ type, allotedAmount, spentAmount, emoji }) => {
       {/* Header */}
       <div className="flex justify-between items-start">
         <div>
-          <p className="text-white text-lg font-semibold">{type}</p>
+          <p className="text-white text-lg font-semibold">{name}</p>
           <p className={statusClass}>{statusText}</p>
         </div>
         <span className="text-2xl">{emoji}</span>

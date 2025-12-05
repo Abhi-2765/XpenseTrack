@@ -1,15 +1,11 @@
 import AddButton from "../components/dashboardComponents/AddButton";
 import DashboardSummaryChips from "../components/dashboardComponents/DashboardSummaryChips";
-import ExportButton from "../components/ExportButton";
+import ExportButton from "../components/dashboardComponents/ExportButton";
 import PieChart from "../components/dashboardComponents/PieChart";
 import SpendingTrends from "../components/dashboardComponents/SpendingTrends";
 import { useAuth } from "../context/AuthProvider";
 import { useNavigate } from "react-router-dom";
 
-/**
- * Dashboard
- * Main analytics view showing key summaries and visual trends.
- */
 const Dashboard = () => {
   const { logout } = useAuth();
   const navigate = useNavigate();
@@ -37,14 +33,7 @@ const Dashboard = () => {
         </div>
 
         {/* Summary Cards */}
-        <DashboardSummaryChips
-          info={{
-            balance: 12345.67,
-            income: 5678.9,
-            expenses: 3456.78,
-            savings: 2222.12,
-          }}
-        />
+        <DashboardSummaryChips />
 
         {/* Charts Section */}
         <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 my-8">

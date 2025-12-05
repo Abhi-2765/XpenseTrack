@@ -1,19 +1,41 @@
+import axios from "axios";
 import {
   Wallet,
   ArrowUpCircle,
   ArrowDownCircle,
   PiggyBank,
 } from "lucide-react";
+import { useEffect, useState } from "react";
 
-const DashboardSummaryChips = ({ info }) => {
+const DashboardSummaryChips = () => {
+  const [info, setInfo] = useState({
+    balance: 0,
+    income: 0,
+    expenses: 0,
+    savings: 0,
+  });
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchInfo = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:5000/report/summary",
+          { withCredentials: true }
+        );
+
+        setInfo(response.data || {});
+      } catch (error) {
+        console.error("Error fetching summary", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchInfo();
+  }, []);
+
   const cards = [
-    {
-      label: "Total Balance",
-      value: info.balance,
-      icon: <Wallet className="w-6 h-6" />,
-      bg: "bg-blue-600/20",
-      color: "text-blue-400",
-    },
     {
       label: "Total Income",
       value: info.income,
@@ -27,6 +49,13 @@ const DashboardSummaryChips = ({ info }) => {
       icon: <ArrowDownCircle className="w-6 h-6" />,
       bg: "bg-red-600/20",
       color: "text-red-400",
+    },
+    {
+      label: "Net Balance",
+      value: info.balance,
+      icon: <Wallet className="w-6 h-6" />,
+      bg: "bg-blue-600/20",
+      color: "text-blue-400",
     },
     {
       label: "Savings",
@@ -50,11 +79,14 @@ const DashboardSummaryChips = ({ info }) => {
           </div>
           <div>
             <p className="text-gray-400 text-sm font-medium">{card.label}</p>
-            <p className="text-white text-2xl font-bold mt-1">{card.value}</p>
+            <p className={`text-2xl mt-1 ${card.color}`}>
+              {loading ? "..." : "₹ " + card.value}
+            </p>
           </div>
         </div>
-      ))}
-    </div>
+      ))
+      }
+    </div >
   );
 };
 

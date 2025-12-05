@@ -11,23 +11,23 @@ export const createBudget = async (req, res) => {
             allotedAmount: amount
         });
         const savedBudget = await newBudget.save();
-        res.status(201).json({ "message": "Budget created successfully", "budget": savedBudget });
+        res.status(201).json({ "message": "Budget created successfully" });
     } catch (error) {
         res.status(500).json({ "message": "Internal server error" });
     }
 }
 
-// export const getBudgets = async (req, res) => {
-//     try {
-//         const userId = req.userId;
-//         if(!userId){
-//             res.status(500).json({"message": "Unable to fetch information"}); 
-//         }
+export const fetchBudget = async (req, res) => {
+    try {
+        const userId = req.userId;
+        if (!userId) {
+            res.status(500).json({ "message": "Unable to fetch information" });
+        }
 
-//         const budgets = await Budget.find({userId: userId});
+        const budgets = await Budget.find({ userId: userId }).select("-userId");
 
-
-//     } catch (error) {
-        
-//     }
-// }
+        res.status(200).json({ "budgets": budgets });
+    } catch (error) {
+        res.status(500).json({ "message": "Internal server error" });
+    }
+}

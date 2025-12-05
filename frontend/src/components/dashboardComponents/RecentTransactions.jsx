@@ -1,9 +1,9 @@
-import TransactionChip from "./TransactionChip"
+import TransactionChip from "../TransactionChip"
 
 const RecentTransactions = () => {
   return (
     <div>
-        <TransactionChip/>
+      <TransactionChip />
     </div>
   )
 }
