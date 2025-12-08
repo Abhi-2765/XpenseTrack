@@ -4,8 +4,8 @@ const mailSender = async (email, otp) => {
     try {
         const transporter = nodemailer.createTransport({
             host: process.env.EMAIL_HOST,
-            port: parseInt(process.env.EMAIL_PORT),
-            secure: true, // true for 465, false for other ports
+            port: parseInt(process.env.EMAIL_PORT) || 587,
+            secure: parseInt(process.env.EMAIL_PORT) === 465, // true for 465, false for other ports
             auth: {
                 user: process.env.EMAIL_USER,
                 pass: process.env.EMAIL_PASS
@@ -33,8 +33,8 @@ const mailSender = async (email, otp) => {
             html: body
         };
 
-        const result = await transporter.sendMail(mailOptions);  
-        console.log(`OTP email sent to ${email}`, result.messageId);  
+        const result = await transporter.sendMail(mailOptions);
+        console.log(`OTP email sent to ${email}`, result.messageId);
     } catch (error) {
         console.log("Mail sending error:", error.message);
         console.log("Error details:", error);
