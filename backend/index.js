@@ -27,23 +27,7 @@ app.use(express.json());
 
 
 app.get('/', (req, res) => {
-  const privateKey = process.env.PRIVATE_KEY?.replace(/\\n/g, "\n");
-  const publicKey = process.env.PUBLIC_KEY?.replace(/\\n/g, "\n");
-
-  if (!privateKey || !publicKey) {
-    return res.status(500).send("Environment variables PRIVATE_KEY or PUBLIC_KEY are missing.");
-  }
-
-  const message = req.body.message || "Hello, World!";
-  const encryptedMessage = publicEncrypt(publicKey, Buffer.from(message));
-  const decryptedMessage = privateDecrypt(privateKey, encryptedMessage);
-
-
-  res.status(200).json({
-    originalMessage: message,
-    encryptedMessage: encryptedMessage.toString('base64'),
-    decryptedMessage: decryptedMessage.toString()
-  })
+  res.send('API is running...');
 });
 
 // Routes
