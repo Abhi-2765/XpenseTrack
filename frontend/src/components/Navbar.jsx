@@ -25,7 +25,7 @@ const Navbar = () => {
             className="flex items-center gap-3 cursor-pointer"
             onClick={() => navigate(isLoggedIn ? "/dashboard" : "/")}
           >
-            <img src="src/assets/logo.png" alt="logo" className="w-44 h-10" />
+            <img src="https://github.com/Abhi-2765/XpenseTrack/blob/main/frontend/src/assets/logo.png" alt="logo" className="w-44 h-10" />
           </div>
 
           {/* Desktop Nav - Only show if logged in */}

@@ -26,7 +26,7 @@ const AuthLayout = ({ title, subtitle, children, footer }) => {
         {/* Logo */}
         <div className="text-center mb-8">
           <a className="inline-flex items-center justify-center gap-2" href="http://localhost:5173/">
-            <img src="src/assets/logo.png" alt="" className="flex w-88 h-20" />
+            <img src="https://github.com/Abhi-2765/XpenseTrack/blob/main/frontend/src/assets/logo.png" alt="" className="flex w-88 h-20" />
           </a>
         </div>
 

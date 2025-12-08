@@ -32,7 +32,6 @@ const Dashboard = () => {
         </div>
       </main>
 
-      {/* Floating Add Button */}
       <div className="fixed bottom-6 right-6 sm:bottom-8 sm:right-8 z-50">
         <AddButton />
       </div>
