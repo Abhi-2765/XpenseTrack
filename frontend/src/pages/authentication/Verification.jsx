@@ -1,8 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
-import AuthLayout from "../components/AuthLayout";
-import { useAuth } from "../context/AuthProvider";
+import AuthLayout from "../../components/AuthLayout";
+import { useAuth } from "../../context/AuthProvider";
 
 
 const Verification = () => {

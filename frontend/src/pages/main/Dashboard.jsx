@@ -1,19 +1,10 @@
-import AddButton from "../components/dashboardComponents/AddButton";
-import DashboardSummaryChips from "../components/dashboardComponents/DashboardSummaryChips";
-import ExportButton from "../components/dashboardComponents/ExportButton";
-import PieChart from "../components/dashboardComponents/PieChart";
-import SpendingTrends from "../components/dashboardComponents/SpendingTrends";
-import { useAuth } from "../context/AuthProvider";
-import { useNavigate } from "react-router-dom";
+import AddButton from "../../components/dashboardComponents/AddButton";
+import DashboardSummaryChips from "../../components/dashboardComponents/DashboardSummaryChips";
+import ExportButton from "../../components/dashboardComponents/ExportButton";
+import PieChart from "../../components/dashboardComponents/PieChart";
+import SpendingTrends from "../../components/dashboardComponents/SpendingTrends";
 
 const Dashboard = () => {
-  const { logout } = useAuth();
-  const navigate = useNavigate();
-
-  const handleLogout = async () => {
-    await logout();
-    navigate("/login");
-  };
 
   return (
     <div className="relative min-h-screen bg-[#111827] text-white font-['Spline_Sans']">
@@ -21,15 +12,7 @@ const Dashboard = () => {
         {/* Header */}
         <div className="flex items-center justify-between mb-8 flex-wrap gap-4">
           <h1 className="text-3xl font-bold">Dashboard</h1>
-          <div className="flex gap-3">
-            <ExportButton />
-            <button
-              onClick={handleLogout}
-              className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg font-semibold transition-colors"
-            >
-              Logout
-            </button>
-          </div>
+          <ExportButton />
         </div>
 
         {/* Summary Cards */}

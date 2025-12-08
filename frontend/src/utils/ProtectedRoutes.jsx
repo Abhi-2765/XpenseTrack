@@ -5,12 +5,12 @@ import Loading from "../components/Loading";
 const ProtectedRoutes = () => {
     const { isLoggedIn, isVerified, isLoading } = useAuth();
 
-    if (isLoading) return <Loading />; // wait for auth check
+    if (isLoading) return <Loading />;
 
-    if (!isLoggedIn) return <Navigate to="/signup" replace />; // not logged in → login
-    if (!isVerified) return <Navigate to="/verify-otp" replace />; // logged in but not verified
+    if (!isLoggedIn) return <Navigate to="/signup" replace />;
+    if (!isVerified) return <Navigate to="/verify-otp" replace />;
 
-    return <Outlet />; // user is authenticated (and verified)
+    return <Outlet />;
 };
 
 export default ProtectedRoutes;

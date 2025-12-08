@@ -26,16 +26,7 @@ const AuthLayout = ({ title, subtitle, children, footer }) => {
         {/* Logo */}
         <div className="text-center mb-8">
           <a className="inline-flex items-center justify-center gap-2" href="http://localhost:5173/">
-            <svg
-              className="h-10 w-10 text-[#00F5D4]"
-              fill="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path d="M21.29,6.71l-4.58-4.58A2,2,0,0,0,15.29,2H8.71a2,2,0,0,0-1.42.59L2.71,6.71A2,2,0,0,0,2,8.12V15.88a2,2,0,0,0,.59,1.42l4.58,4.58A2,2,0,0,0,8.71,22h6.58a2,2,0,0,0,1.42-.59l4.58-4.58A2,2,0,0,0,22,15.88V8.12A2,2,0,0,0,21.29,6.71ZM12,18a6,6,0,1,1,6-6A6,6,0,0,1,12,18Zm-1.5-8.5a.5.5,0,0,1,.5-.5h2a.5.5,0,0,1,.5.5v5a.5.5,0,0,1-.5.5h-2a.5.5,0,0,1-.5-.5Z"></path>
-            </svg>
-            <span className="text-3xl font-bold text-white tracking-wider">
-              XpenseTrack
-            </span>
+            <img src="src/assets/logo.png" alt="" className="flex w-88 h-20" />
           </a>
         </div>
 

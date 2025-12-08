@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import AuthLayout from "../components/AuthLayout";
+import AuthLayout from "../../components/AuthLayout";
 
 const ForgotPassword = () => {
     const {

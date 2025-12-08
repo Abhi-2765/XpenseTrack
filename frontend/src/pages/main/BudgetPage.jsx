@@ -1,10 +1,10 @@
 "use client";
 import { useNavigate } from "react-router-dom";
-import BudgetChip from "../components/BudgetChip";
+import BudgetChip from "../../components/BudgetChip.jsx";
 import { Plus } from "lucide-react";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import Loading from "../components/Loading.jsx"
+import Loading from "../../components/Loading.jsx"
 
 const BudgetPage = () => {
   const navigate = useNavigate();

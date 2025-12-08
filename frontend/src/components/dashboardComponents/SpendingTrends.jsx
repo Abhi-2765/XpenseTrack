@@ -1,23 +1,63 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { LineChart } from "@mui/x-charts/LineChart";
+import axios from "axios";
 
 export default function SpendingTrends() {
   const [period, setPeriod] = useState("monthly");
 
-  const monthlyData = {
-    x: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-    income: [4000, 4200, 4600, 4800, 5000, 5300, 5500, 5600, 5800, 6000, 6200, 6400],
-    expenses: [2000, 2500, 2400, 2800, 3000, 3100, 3200, 3300, 3400, 3600, 3700, 3900],
-  };
+  const [monthlyData, setMonthlyData] = useState({
+    x: [],
+    income: [],
+    expenses: []
+  });
 
-  const dailyData = {
-    x: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-    income: [200, 250, 300, 280, 320, 400, 350],
-    expenses: [150, 180, 220, 210, 250, 300, 280],
-  };
+  const [dailyData, setDailyData] = useState({
+    x: [],
+    income: [],
+    expenses: []
+  });
+
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchMonthlyData = async () => {
+      const response = await axios.get(
+        "http://localhost:5000/report/fetchMonthlyData",
+        { withCredentials: true }
+      );
+      setMonthlyData(response.data);
+    };
+
+    const fetchDailyData = async () => {
+      const response = await axios.get(
+        "http://localhost:5000/report/fetchDailyData",
+        { withCredentials: true }
+      );
+      setDailyData(response.data);
+    };
+
+    setLoading(true);
+
+    (async () => {
+      if (period === "monthly") {
+        await fetchMonthlyData();
+      } else {
+        await fetchDailyData();
+      }
+      setLoading(false);
+    })();
+  }, [period]);
 
   const current = period === "monthly" ? monthlyData : dailyData;
+
+  if (loading || !current.x.length) {
+    return (
+      <div className="text-gray-400 text-center py-10">
+        Loading chart...
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col w-full h-full text-white">
@@ -27,7 +67,9 @@ export default function SpendingTrends() {
           <button
             key={p}
             onClick={() => setPeriod(p)}
-            className={`px-4 py-1.5 text-sm font-semibold rounded-full transition-all ${period === p ? "bg-blue-500 text-white" : "bg-gray-700 text-gray-300 hover:text-white"
+            className={`px-4 py-1.5 text-sm font-semibold rounded-full transition-all ${period === p
+                ? "bg-blue-500 text-white"
+                : "bg-gray-700 text-gray-300 hover:text-white"
               }`}
           >
             {p[0].toUpperCase() + p.slice(1)}

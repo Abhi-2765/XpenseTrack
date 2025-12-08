@@ -2,8 +2,8 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Loading from "../components/Loading"
-import TransactionChip from "../components/TransactionChip"
+import Loading from "../../components/Loading"
+import TransactionChip from "../../components/TransactionChip"
 import { Plus, CalendarDays, Tags, DollarSign, ChevronLeft, ChevronRight } from "lucide-react";
 
 const TransactionPage = () => {

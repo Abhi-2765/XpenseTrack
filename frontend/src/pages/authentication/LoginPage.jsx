@@ -1,8 +1,8 @@
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios"
-import AuthLayout from "../components/AuthLayout";
-import { useAuth } from "../context/AuthProvider";
+import AuthLayout from "../../components/AuthLayout";
+import { useAuth } from "../../context/AuthProvider";
 
 const Login = () => {
   const {

@@ -37,14 +37,14 @@ const DashboardSummaryChips = () => {
 
   const cards = [
     {
-      label: "Total Income",
+      label: "Total Income (Monthly)",
       value: info.income,
       icon: <ArrowUpCircle className="w-6 h-6" />,
       bg: "bg-green-600/20",
       color: "text-green-400",
     },
     {
-      label: "Total Expenses",
+      label: "Total Expenses (Monthly)",
       value: info.expenses,
       icon: <ArrowDownCircle className="w-6 h-6" />,
       bg: "bg-red-600/20",

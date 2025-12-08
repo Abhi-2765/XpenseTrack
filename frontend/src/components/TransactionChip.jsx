@@ -16,7 +16,7 @@ const TransactionChip = ({ note, date, category, amount, type }) => {
       </div>
 
       <div className="flex-1">
-        <p className="font-medium text-white">{note}</p>
+        <p className="text-md font-bold text-white">{note ? note : category[0].toUpperCase() + category.slice(1)}</p>
         <p className="text-sm text-gray-400">{date}</p>
       </div>
 

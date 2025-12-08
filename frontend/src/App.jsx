@@ -2,19 +2,24 @@ import { Suspense } from "react";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import { AuthProvider } from "./context/AuthProvider"
 
-import BudgetPage from "./pages/BudgetPage";
-import Dashboard from "./pages/Dashboard";
-import Login from "./pages/LoginPage";
-import Signup from "./pages/SignUpPage";
-import Transaction from "./pages/TransactionPage";
+import BudgetPage from "./pages/main/BudgetPage";
+import Dashboard from "./pages/main/Dashboard";
+import Login from "./pages/authentication/LoginPage";
+import Signup from "./pages/authentication/SignUpPage";
+import Transaction from "./pages/main/TransactionPage";
 
-import AddTransaction from "./pages/AddTransaction"
+import AddTransaction from "./pages/main/AddTransaction"
 import Loading from "./components/Loading";
 import Navbar from "./components/Navbar";
-import AddBudget from "./pages/AddBudget";
-import Verification from "./pages/Verification";
+import AddBudget from "./pages/main/AddBudget";
+import Verification from "./pages/authentication/Verification";
 import ProtectedRoutes from "./utils/ProtectedRoutes";
 import PublicRoutes from "./utils/PublicRoutes";
+import Footer from "./components/Footer";
+import PageNotFound from "./pages/utils/PageNotFound";
+import Profile from "./pages/main/Profile";
+import ComingSoon from "./pages/utils/ComingSoon";
+import Home from "./pages/Home";
 
 const AppContent = () => {
   const location = useLocation();
@@ -33,6 +38,7 @@ const AppContent = () => {
       >
         <Routes>
           <Route element={<PublicRoutes />}>
+            <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
           </Route>
@@ -42,12 +48,19 @@ const AppContent = () => {
           <Route element={<ProtectedRoutes />}>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/transaction" element={<Transaction />} />
+            <Route path="/groups" element={<ComingSoon pageName="Groups" />} />
             <Route path="/budget" element={<BudgetPage />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/ai" element={<ComingSoon pageName="AI" />} />
             <Route path="/add-transaction" element={<AddTransaction />} />
             <Route path="/add-budget" element={<AddBudget />} />
           </Route>
+
+          <Route path="*" element={<PageNotFound />} />
         </Routes>
       </Suspense>
+
+      {!hideNavbar && <Footer />}
     </>
   );
 };
