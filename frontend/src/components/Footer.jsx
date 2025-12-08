@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Facebook, Twitter, Instagram, Linkedin, Mail, MapPin, Phone } from "lucide-react";
+import logo from "../assets/logo.png";
 
 const FooterLink = ({ to, label }) => (
     <li>
@@ -31,7 +32,7 @@ const Footer = () => {
                     {/* Brand Section */}
                     <div className="space-y-4">
                         <div className="flex items-center gap-2">
-                            <img src="https://github.com/Abhi-2765/XpenseTrack/blob/main/frontend/src/assets/logo.png" alt="XPTrack Logo" className="w-40 h-auto" />
+                            <img src={logo} alt="XPTrack Logo" className="w-40 h-auto" />
                         </div>
                         <p className="text-sm leading-relaxed max-w-xs">
                             Take control of your finances with XPTrack. Smart budgeting, detailed analytics, and seamless expense tracking all in one place.

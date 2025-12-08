@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthProvider";
+import logo from "../assets/logo.png";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -25,7 +26,7 @@ const Navbar = () => {
             className="flex items-center gap-3 cursor-pointer"
             onClick={() => navigate(isLoggedIn ? "/dashboard" : "/")}
           >
-            <img src="https://github.com/Abhi-2765/XpenseTrack/blob/main/frontend/src/assets/logo.png" alt="logo" className="w-44 h-10" />
+            <img src={logo} alt="logo" className="w-44 h-10" />
           </div>
 
           {/* Desktop Nav - Only show if logged in */}
