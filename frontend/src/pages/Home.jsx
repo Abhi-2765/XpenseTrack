@@ -37,7 +37,7 @@ const Home = () => {
                     </h1>
 
                     <p className="text-xl text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed">
-                        XPTrack simplifies expense tracking and budgeting. Gain clear insights into your spending habits and take control of your financial freedom today.
+                        XpenseTrack simplifies expense tracking and budgeting. Gain clear insights into your spending habits and take control of your financial freedom today.
                     </p>
 
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -65,7 +65,7 @@ const Home = () => {
             <section className="py-20 bg-[#0f1523]">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center mb-16">
-                        <h2 className="text-3xl font-bold mb-4">Why Choose XPTrack?</h2>
+                        <h2 className="text-3xl font-bold mb-4">Why Choose XpenseTrack?</h2>
                         <p className="text-gray-400">Everything you need to manage your money effectively.</p>
                     </div>
 
