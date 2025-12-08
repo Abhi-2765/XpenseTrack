@@ -93,7 +93,7 @@ const Home = () => {
             <section className="py-24 relative overflow-hidden">
                 <div className="max-w-5xl mx-auto px-4 text-center relative z-10">
                     <h2 className="text-4xl font-bold mb-6">Ready to take control?</h2>
-                    <p className="text-gray-400 mb-10 text-lg">Join thousands of users who are already managing their finances smarter with XPTrack.</p>
+                    <p className="text-gray-400 mb-10 text-lg">Join thousands of users who are already managing their finances smarter with XpenseTrack.</p>
                     <Link
                         to="/signup"
                         className="inline-flex px-10 py-4 bg-white text-gray-900 rounded-xl font-bold text-lg hover:bg-gray-100 transition-all duration-300 transform hover:-translate-y-1 shadow-xl"
