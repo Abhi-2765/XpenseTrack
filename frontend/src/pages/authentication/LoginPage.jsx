@@ -20,7 +20,7 @@ const Login = () => {
     await new Promise((resolve) => setTimeout(resolve, 1500));
 
     try {
-      const response = await axios.post("http://localhost:5000/auth/login", {
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/auth/login`, {
         email: data.email,
         password: data.password
       }, { withCredentials: true })

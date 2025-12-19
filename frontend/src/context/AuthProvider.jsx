@@ -13,7 +13,7 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => {
         const verifyUser = async () => {
             try {
-                const { data } = await axios.get("http://localhost:5000/auth/check-auth", {
+                const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/auth/check-auth`, {
                     withCredentials: true,
                 });
 
@@ -22,8 +22,6 @@ export const AuthProvider = ({ children }) => {
                     setIsVerified(data.verified || false);
                     setMcpAPI(data.mcpAPI || null);
                     setEmail(data.email || null);
-
-                    console.log(data);
                 } else {
                     setIsLoggedIn(false);
                     setIsVerified(false);
@@ -46,7 +44,7 @@ export const AuthProvider = ({ children }) => {
 
     const logout = async () => {
         try {
-            await axios.post("http://localhost:5000/auth/logout", {}, {
+            await axios.post(`${import.meta.env.VITE_API_URL}/auth/logout`, {}, {
                 withCredentials: true,
             });
             setIsLoggedIn(false);

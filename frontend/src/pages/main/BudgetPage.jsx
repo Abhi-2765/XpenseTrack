@@ -15,7 +15,7 @@ const BudgetPage = () => {
   useEffect(() => {
     const fetchBudgets = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/budget/fetch", {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/budget/fetch`, {
           withCredentials: true,
         });
 

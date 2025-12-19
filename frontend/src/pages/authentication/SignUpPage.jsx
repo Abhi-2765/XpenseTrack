@@ -20,7 +20,7 @@ const Signup = () => {
   // creating account
   const onSubmit = async (data) => {
     try {
-      const response = await axios.post("http://localhost:5000/auth/register", {
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/auth/register`, {
         name: data.name,
         email: data.email,
         password: data.password,

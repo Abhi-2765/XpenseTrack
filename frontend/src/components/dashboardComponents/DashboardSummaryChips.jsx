@@ -20,7 +20,7 @@ const DashboardSummaryChips = () => {
     const fetchInfo = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/report/summary",
+          `${import.meta.env.VITE_API_URL}/report/summary`,
           { withCredentials: true }
         );
 

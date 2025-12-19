@@ -1,4 +1,5 @@
 import logo from "../assets/logo.png";
+import { Link } from "react-router-dom";
 
 const AuthLayout = ({ title, subtitle, children, footer }) => {
   return (
@@ -27,12 +28,12 @@ const AuthLayout = ({ title, subtitle, children, footer }) => {
       <div className="relative z-20 w-full max-w-sm">
         {/* Logo */}
         <div className="text-center mb-8">
-          <a className="inline-flex items-center justify-center gap-2" href="http://localhost:5173/">
+          <Link to="/">
             <img src={logo} alt="" className="flex w-88 h-20" />
-          </a>
+          </Link>
         </div>
 
-        <div className="bg-[#161B22]/60 backdrop-blur-xl p-8 rounded-2xl shadow-2xl shadow-[0_10px_30px_-15px_rgba(0,0,0,0.3),0_0_20px_rgba(0,245,212,0.1)]">
+        <div className="bg-[#161B22]/60 backdrop-blur-xl p-8 rounded-2xl shadow-[0_10px_30px_-15px_rgba(0,0,0,0.3),0_0_20px_rgba(0,245,212,0.1)]">
           <div className="text-center">
             <h2 className="text-2xl font-bold text-white">{title}</h2>
             <p className="mt-2 text-sm text-[#8B949E]">{subtitle}</p>

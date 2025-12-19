@@ -14,7 +14,7 @@ const ForgotPassword = () => {
         await new Promise((resolve) => setTimeout(resolve, 1500));
 
         try {
-            await axios.post("http://localhost:5000/auth/forgot-password", {
+            await axios.post(`${import.meta.env.VITE_API_URL}/auth/forgot-password`, {
                 email: data.email,
                 confirmEmail: data.confirmEmail
             }, { withCredentials: true });

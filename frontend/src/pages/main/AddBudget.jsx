@@ -23,7 +23,7 @@ const AddBudget = () => {
   const onSubmit = async (data) => {
     try {
       const response = await axios.post(
-        "http://localhost:5000/budget/add",
+        `${import.meta.env.VITE_API_URL}/budget/add`,
         {
           name: data.notes,
           icon: data.icon,

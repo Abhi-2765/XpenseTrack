@@ -42,7 +42,7 @@ const AddTransaction = () => {
   const onSubmit = async (data) => {
     console.log(data);
     try {
-      const response = await axios.post("http://localhost:5000/transactions/add",
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/transactions/add`,
         {
           amount: data.amount,
           type: data.type,

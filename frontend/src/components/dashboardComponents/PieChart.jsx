@@ -20,7 +20,7 @@ export default function PieCharts({ defaultPeriod = "monthly" }) {
     const fetchMonthly = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:5000/report/fetchMonthlyCategoricalSpendings",
+          `${import.meta.env.VITE_API_URL}/report/fetchMonthlyCategoricalSpendings`,
           { withCredentials: true }
         );
 
@@ -36,7 +36,7 @@ export default function PieCharts({ defaultPeriod = "monthly" }) {
     const fetchYearly = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:5000/report/fetchYearlyCategoricalSpendings",
+          `${import.meta.env.VITE_API_URL}/report/fetchYearlyCategoricalSpendings`,
           { withCredentials: true }
         );
 

@@ -60,7 +60,7 @@ const Verification = () => {
     setErrorMessage("");
     try {
       console.log(email);
-      await axios.post("http://localhost:5000/auth-otp/send-otp", {
+      await axios.post(`${import.meta.env.VITE_API_URL}/auth-otp/send-otp`, {
         email: email,
       }, { withCredentials: true });
       setTimeLeft(120);
@@ -78,7 +78,7 @@ const Verification = () => {
     }
 
     try {
-      const response = await axios.post("http://localhost:5000/auth-otp/verify-otp", {
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/auth-otp/verify-otp`, {
         email: email,
         otp: enteredOtp,
       }, { withCredentials: true });

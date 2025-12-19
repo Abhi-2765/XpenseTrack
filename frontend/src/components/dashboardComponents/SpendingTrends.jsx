@@ -23,7 +23,7 @@ export default function SpendingTrends() {
   useEffect(() => {
     const fetchMonthlyData = async () => {
       const response = await axios.get(
-        "http://localhost:5000/report/fetchMonthlyData",
+        `${import.meta.env.VITE_API_URL}/report/fetchMonthlyData`,
         { withCredentials: true }
       );
       setMonthlyData(response.data);
@@ -31,7 +31,7 @@ export default function SpendingTrends() {
 
     const fetchDailyData = async () => {
       const response = await axios.get(
-        "http://localhost:5000/report/fetchDailyData",
+        `${import.meta.env.VITE_API_URL}/report/fetchDailyData`,
         { withCredentials: true }
       );
       setDailyData(response.data);
@@ -68,8 +68,8 @@ export default function SpendingTrends() {
             key={p}
             onClick={() => setPeriod(p)}
             className={`px-4 py-1.5 text-sm font-semibold rounded-full transition-all ${period === p
-                ? "bg-blue-500 text-white"
-                : "bg-gray-700 text-gray-300 hover:text-white"
+              ? "bg-blue-500 text-white"
+              : "bg-gray-700 text-gray-300 hover:text-white"
               }`}
           >
             {p[0].toUpperCase() + p.slice(1)}
