@@ -18,20 +18,20 @@ const PORT = process.env.PORT || 5000;
 
 app.use(
   cors({
-    origin: ["https://xpense-track-web.vercel.app"],
+    origin: ["https://xpensetrack.onrender.com", "https://xpensetrackmcp.onrender.com"],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
+    allowedHeaders: ["Content-Type", "Authorization", "X-MCP-KEY", "userid"],
   })
 );
 app.use(cookieParser());
 app.use(express.json());
+app.set("trust proxy", true);
 
-
+// Routes
 app.get('/', (req, res) => {
   res.send('API is running...');
 });
-
-// Routes
 app.use('/auth', authRoute);
 app.use('/auth-otp', authOtpRoute);
 app.use('/transactions', transactionRoute);
