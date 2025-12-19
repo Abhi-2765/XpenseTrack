@@ -2,6 +2,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { generateTokenAndSetCookie } from "../utils/generateTokenAndSetCookie.js";
 import User from "../models/User.js";
+import { nanoid } from "nanoid";
 import mailSender from "../utils/forgetPasswordMailSender.js";
 import { sendOtpToEmail } from "./authOtpController.js";
 
@@ -22,12 +23,14 @@ export const register = async (req, res) => {
         // hashing password
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
+        const mcpAPI = nanoid(16);
 
         const newUser = new User({
             name,
             email,
             password: hashedPassword,
-            isVerified: false
+            isVerified: false,
+            mcpAPI: mcpAPI
         });
 
         await newUser.save();
@@ -117,7 +120,7 @@ export const checkAuth = async (req, res) => {
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         const user = await User.findById(decoded.userId)
-        res.status(200).json({ status: true, verified: user.isVerified, message: "User is authenticated.", email: user.email });
+        res.status(200).json({ status: true, verified: user.isVerified, message: "User is authenticated.", email: user.email, mcpAPI: user.mcpAPI });
     } catch (error) {
         res.status(401).json({ status: false, message: 'Token is not valid.' });
     }

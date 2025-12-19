@@ -40,6 +40,7 @@ const AddTransaction = () => {
   const transactionType = watch("type", "expense");
 
   const onSubmit = async (data) => {
+    console.log(data);
     try {
       const response = await axios.post("http://localhost:5000/transactions/add",
         {
@@ -61,7 +62,6 @@ const AddTransaction = () => {
         notes: "",
       });
 
-      console.log(response); // delete later
 
     } catch (error) {
       console.log(error);

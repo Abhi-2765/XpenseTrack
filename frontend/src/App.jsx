@@ -7,6 +7,7 @@ import Dashboard from "./pages/main/Dashboard";
 import Login from "./pages/authentication/LoginPage";
 import Signup from "./pages/authentication/SignUpPage";
 import Transaction from "./pages/main/TransactionPage";
+import AI from "./pages/main/AI";
 
 import AddTransaction from "./pages/main/AddTransaction"
 import Loading from "./components/Loading";
@@ -51,7 +52,7 @@ const AppContent = () => {
             <Route path="/groups" element={<ComingSoon pageName="Groups" />} />
             <Route path="/budget" element={<BudgetPage />} />
             <Route path="/profile" element={<Profile />} />
-            <Route path="/ai" element={<ComingSoon pageName="AI" />} />
+            <Route path="/ai" element={<AI />} />
             <Route path="/add-transaction" element={<AddTransaction />} />
             <Route path="/add-budget" element={<AddBudget />} />
           </Route>

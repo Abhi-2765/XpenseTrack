@@ -5,7 +5,6 @@ import Transaction from "../models/Transaction.js";
 export const addTransaction = async (req, res) => {
     try {
         const { amount, type, category, date, note } = req.body;
-
         const newTransaction = new Transaction({
             userId: req.userId,
             amount: amount,
@@ -42,7 +41,7 @@ export const getTransactionHistory = async (req, res) => {
 
         const total = await Transaction.countDocuments(query);
         const transactions = await Transaction.find(query)
-            .sort({ createdAt: -1 })
+            .sort({ date: -1 })
             .skip((pageNum - 1) * limitNum)
             .limit(limitNum)
             .select("-userId")

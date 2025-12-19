@@ -7,6 +7,7 @@ export const AuthProvider = ({ children }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [isVerified, setIsVerified] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
+    const [mcpAPI, setMcpAPI] = useState(null);
     const [email, setEmail] = useState(null);
 
     useEffect(() => {
@@ -19,16 +20,21 @@ export const AuthProvider = ({ children }) => {
                 if (data.status) {
                     setIsLoggedIn(true);
                     setIsVerified(data.verified || false);
+                    setMcpAPI(data.mcpAPI || null);
                     setEmail(data.email || null);
+
+                    console.log(data);
                 } else {
                     setIsLoggedIn(false);
                     setIsVerified(false);
+                    setMcpAPI(null);
                     setEmail(null);
                 }
             } catch (error) {
                 console.error("Auth check failed:", error);
                 setIsLoggedIn(false);
                 setIsVerified(false);
+                setMcpAPI(null);
                 setEmail(null);
             } finally {
                 setIsLoading(false);
@@ -45,6 +51,7 @@ export const AuthProvider = ({ children }) => {
             });
             setIsLoggedIn(false);
             setIsVerified(false);
+            setMcpAPI(null);
             setEmail(null);
         } catch (error) {
             console.error("Logout failed:", error);
@@ -57,11 +64,13 @@ export const AuthProvider = ({ children }) => {
                 isLoggedIn,
                 isVerified,
                 isLoading,
+                mcpAPI,
                 email,
                 setIsLoggedIn,
                 setIsVerified,
+                setMcpAPI,
                 setEmail,
-                logout,
+                logout
             }}
         >
             {children}
