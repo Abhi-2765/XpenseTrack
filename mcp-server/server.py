@@ -9,7 +9,9 @@ import logging
 
 load_dotenv()
 
-app = FastMCP("xpensetrack", host="0.0.0.0", port=8000)
+PORT = int(os.getenv("PORT"))
+
+app = FastMCP("xpensetrack", host="0.0.0.0", port=PORT)
 
 main_url = os.getenv("BACKEND_URL")
 DATE_REGEX = r"^\d{4}-\d{2}-\d{2}$"

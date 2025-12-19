@@ -17,6 +17,8 @@ const Signup = () => {
 
   const navigate = useNavigate();
 
+  console.log(`${import.meta.env.VITE_API_URL}/auth/register`)
+
   // creating account
   const onSubmit = async (data) => {
     try {
